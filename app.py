@@ -72,7 +72,7 @@ from static.functions.db_connections_functions import execute_query
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 cors = CORS(app, resources={r"/handover_form": {"origins": "*"}})  # Enable CORS for /handover_form route
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = 
 
 app.register_blueprint(page_routes)
 
@@ -86,6 +86,7 @@ def manager():
 def employee():
     return render_template('employee.html')
 
+
     
 @app.route('/get_username')
 def get_username():
@@ -93,6 +94,9 @@ def get_username():
     name = session.get('login_row_data', {}).get('Name')
 
     return jsonify({'username': name})
+
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -174,6 +178,7 @@ def login():
 
 
 
+
 @app.route('/get_session_data', methods=['GET'])
 def get_session_data():
     print('this is the session data', session['login_row_data'])
@@ -181,6 +186,9 @@ def get_session_data():
         return jsonify({"error": "User data not found in session"}), 404
 
     return jsonify(session['login_row_data'])
+
+
+
 
 
 @app.route('/cart_items')
@@ -197,6 +205,8 @@ def cart_items():
 
 
 
+
+
 @app.route('/send_approval_request', methods=['POST'])
 def send_approval_request():
     try:
@@ -208,6 +218,9 @@ def send_approval_request():
         return jsonify({'message': 'Excel file updated successfully'}), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+
 
 
 
@@ -233,12 +246,16 @@ def approve_send_request():
     return response
 
 
+
+
 @app.route('/disapprove_send_request', methods=['POST'])
 def disapprove_send_request():
     form_data = request.json  # Assuming the form data is sent as JSON
     print("This is the disapprove_send_request form data", form_data)
     approvesend.disapprove_send_request_function( form_data)                     
     return jsonify({'message': 'Data updated successfully.'})
+
+
 
 
 @app.route('/approve_receive_request', methods=['POST'])
@@ -250,13 +267,15 @@ def approve_receive_request():
     return "Approval has been successfully given, the email is sent, the sender may proceed to send the items"
 
 
+
+
 @app.route('/disapprove_receive_request', methods=['POST'])
 def disapprove_receive_request():
 
     data = request.json  # Assuming the data sent in the request body is JSON
     
     approvereceive.disapprove_receive_request_function( data)
-    return "Approval has been successfully given, the email is sent, the sender may proceed to send the items"
+    return "Disapproval has been successfully given"
 
 
 
@@ -305,7 +324,7 @@ def disapprove_receive_approval_request():
     print(" diss form_data",form_data)
     print("This is the receive_approval_request form data", form_data)
     receive_items.disapprove_receive_approval_request_function(form_data)
-    return "Mail for approval of receiving item is sent, you may contact your manager to approve it."
+    return "Disapprove request for receive approval has been given"
 
 
 
