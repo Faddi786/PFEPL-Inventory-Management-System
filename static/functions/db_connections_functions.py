@@ -2,11 +2,6 @@ import mysql.connector
 from mysql.connector import pooling
 import time
 
-
-# Variables to track the pool usage
-pool_active_connections = 0
-pool_free_connections = db_pool.pool_size
-
 # Function to log pool status
 def log_pool_status():
     global pool_active_connections, pool_free_connections
